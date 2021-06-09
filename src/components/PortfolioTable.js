@@ -10,6 +10,7 @@ function PortfolioTable() {
   const state = useSelector(state => state.user);
 
   const [ownedStocks, setOwnedStocks] = useState([]);
+  const [netWorth, setNetWorth] = useState(0);
 
   useEffect(() => {
     if (state.loggedIn) {
@@ -17,10 +18,21 @@ function PortfolioTable() {
         .get(`${BASE_URL}/user/${state.userId}`)
         .then(response => {
           setOwnedStocks(response.data["stocks_owned"]);
+
+          var counter = 0;
+
+          for (var i = 0; i < response.data["stocks_owned"].length; i++) {
+            counter +=
+              prices[state.currDate][
+                response.data["stocks_owned"][i]["stock_name"]
+              ] * response.data["stocks_owned"][i]["qty_owned"];
+          }
+          counter += response.data["balance"];
+          setNetWorth(counter);
         })
         .catch(err => console.log(err));
     }
-  }, []);
+  }, [state.currDate]);
 
   const columns = [
     {
@@ -71,7 +83,12 @@ function PortfolioTable() {
     mappedData.push(temp);
   }
 
-  return <Table dataSource={mappedData} columns={columns} />;
+  return (
+    <>
+      <h2>Net Worth: ${numberWithCommas(netWorth.toFixed(2))}</h2>{" "}
+      <Table dataSource={mappedData} columns={columns} />
+    </>
+  );
 }
 
 export default PortfolioTable;
