@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { Header, Table, Tag } from "antd";
 import { useSelector } from "react-redux";
 import { pnldata } from "../data";
-import { numberWithCommas } from "../functions";
+import { numberWithCommas, BASE_URL } from "../functions";
 import axios from "axios";
 
 function PnLTable() {
@@ -13,7 +13,7 @@ function PnLTable() {
   useEffect(() => {
     if (state.loggedIn) {
       axios
-        .get(`${process.env.BASE_URL}/user/${state.userId}`)
+        .get(`${BASE_URL}/user/${state.userId}`)
         .then(response => {
           setOwnedStocks(response.data["stock_history"]);
         })

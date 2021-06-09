@@ -5,7 +5,7 @@ import "./styles/Header.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { setDay, updateStocksOwned, logOutUser, nextDay } from "../actions";
-import { indexToDate } from "../functions";
+import { indexToDate, BASE_URL } from "../functions";
 const { Title } = Typography;
 
 function Header() {
@@ -17,7 +17,7 @@ function Header() {
   useEffect(() => {
     if (state.loggedIn) {
       axios
-        .get(`${process.env.BASE_URL}/user/${state.userId}`)
+        .get(`${BASE_URL}/user/${state.userId}`)
         .then(response => {
           setBalance(response.data.balance);
           setDate(response.data["curr_date"]);
@@ -29,15 +29,13 @@ function Header() {
   });
 
   const advanceDay = () => {
-    axios
-      .post(`${process.env.BASE_URL}/nextday`, { id: state.userId })
-      .then(response => {
-        notification.success({
-          message: "Advanced a month"
-        });
-        setDate(currDate + 1);
-        dispatch(nextDay());
+    axios.post(`${BASE_URL}/nextday`, { id: state.userId }).then(response => {
+      notification.success({
+        message: "Advanced a month"
       });
+      setDate(currDate + 1);
+      dispatch(nextDay());
+    });
   };
 
   const logOut = () => {

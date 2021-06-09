@@ -10,7 +10,7 @@ import {
 } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { pnldata } from "../data";
-import { numberWithCommas } from "../functions";
+import { numberWithCommas, BASE_URL } from "../functions";
 import { updateBalance, dummyAction } from "../actions";
 import axios from "axios";
 const prices = require("../data.json");
@@ -27,7 +27,7 @@ function StockMarketTable() {
   useEffect(() => {
     if (state.loggedIn) {
       axios
-        .get(`${process.env.BASE_URL}/user/${state.userId}`)
+        .get(`${BASE_URL}/user/${state.userId}`)
         .then(response => {
           var stocks = response.data["stocks_owned"];
           var bigObj = {};
@@ -65,7 +65,7 @@ function StockMarketTable() {
       value: parseInt((record.price * values["quantity"]).toFixed(2))
     };
     axios
-      .post(`${process.env.BASE_URL}/stocks`, data)
+      .post(`${BASE_URL}/stocks`, data)
       .then(response => {
         dispatch(dummyAction());
         setRender(!render);

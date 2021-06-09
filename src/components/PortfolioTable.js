@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Header, Table } from "antd";
 import { data } from "../data";
-import { numberWithCommas } from "../functions";
+import { numberWithCommas, BASE_URL } from "../functions";
 import axios from "axios";
 const prices = require("../data.json");
 
@@ -14,7 +14,7 @@ function PortfolioTable() {
   useEffect(() => {
     if (state.loggedIn) {
       axios
-        .get(`${process.env.BASE_URL}/user/${state.userId}`)
+        .get(`${BASE_URL}/user/${state.userId}`)
         .then(response => {
           setOwnedStocks(response.data["stocks_owned"]);
         })

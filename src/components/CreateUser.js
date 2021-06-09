@@ -3,6 +3,7 @@ import { connect, useSelector, useDispatch } from "react-redux";
 import { resetUser } from "../actions";
 import { Row, Col, Form, Input, Button, notification } from "antd";
 import { Link, useHistory } from "react-router-dom";
+import { BASE_URL } from "../functions";
 import Header from "./Header";
 import axios from "axios";
 
@@ -13,7 +14,7 @@ function CreateUser() {
 
   const onFinish = values => {
     axios
-      .post(`${process.env.BASE_URL}/user`, values)
+      .post(`${BASE_URL}/user`, values)
       .then(response => {
         dispatch(resetUser());
         notification.success({

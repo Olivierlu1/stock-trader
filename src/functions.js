@@ -2,6 +2,8 @@ export function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+export const BASE_URL = "https://sleepy-castle-16489.herokuapp.com";
+
 export const indexToDate = {
   0: "2011-07-01",
   1: "2011-08-01",

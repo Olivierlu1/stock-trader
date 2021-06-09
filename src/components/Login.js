@@ -3,6 +3,7 @@ import { connect, useSelector, useDispatch } from "react-redux";
 import { logInUser } from "../actions";
 import { Row, Col, Form, Input, Button, notification } from "antd";
 import { Link, useHistory } from "react-router-dom";
+import { BASE_URL } from "../functions";
 import Header from "./Header";
 import axios from "axios";
 
@@ -13,7 +14,7 @@ function Login() {
 
   const onFinish = values => {
     axios
-      .post(`${process.env.BASE_URL}/login`, values)
+      .post(`${BASE_URL}/login`, values)
       .then(response => {
         dispatch(logInUser({ id: response.data["_id"] }));
         history.push("/stockmarket");
